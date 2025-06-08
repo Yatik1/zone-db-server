@@ -25,4 +25,4 @@ class Message(models.Model):
     file = models.URLField(blank=True, null=True)   
 
     def __str__(self):
-        return f"Message {self.message_id} in Chat {self.chat.chat_id}"
+        return f" {self.message_id} in {self.chat.chat_name} "

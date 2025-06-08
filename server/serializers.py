@@ -18,3 +18,8 @@ class UserWithChatsSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.User
         fields = ['user_id', 'user_name','chats']
+
+class MessageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Message
+        fields = "__all__"

@@ -54,3 +54,41 @@ def get_users(request):
     users = User.objects.prefetch_related('chats')
     serializer = UserWithChatsSerializer(users, many=True)
     return Response(serializer.data)
+
+@api_view(["DELETE"])
+def delete_chat(request,chat_id):
+    user_id = request.GET.get("user_id")
+    try:
+        chat = Chat.objects.get(chat_id=chat_id, user__user_id=user_id)
+    except Chat.DoesNotExist:
+        return Response({"error" :"Invalid chat_id or unauthorized user"} , status = status.HTTP_404_NOT_FOUND)
+    
+    chat.delete()
+
+    return Response({"message":"Chat and its messages have been deleted."}, status=status.HTTP_200_OK)
+
+@api_view(["PATCH"])
+def update_chat_name(request, chat_id):
+    user_id = request.GET.get("user_id")
+
+    try:
+        chat = Chat.objects.get(chat_id=chat_id, user__user_id=user_id)
+    except Chat.DoesNotExist:
+        return Response({"error":"Invalid chat_id or unauthorized user"},status=status.HTTP_404_NOT_FOUND)
+    
+    data = {} 
+
+    if 'chat_name' in request.data:
+        data["chat_name"] = request.data["chat_name"]
+    else:
+        return Response({"errro" : "Only chat_name can be updated"}, status=status.HTTP_404_BAD_REQUEST)
+    
+    serializer = ChatSerializer(chat,data=data,partial=True)
+
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+

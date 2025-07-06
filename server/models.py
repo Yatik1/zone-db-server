@@ -22,7 +22,8 @@ class Message(models.Model):
     chat = models.ForeignKey(Chat, on_delete=models.CASCADE, related_name='messages')
     user_query = models.TextField()
     ai_response = models.TextField()
-    file = models.URLField(blank=True, null=True)   
+    fileName = models.TextField(blank=True, null=True) 
+    fileType = models.TextField(blank=True, null=True)
 
     def __str__(self):
         return f" {self.message_id} in {self.chat.chat_name} "

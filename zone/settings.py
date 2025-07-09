@@ -31,8 +31,9 @@ SECRET_KEY = 'django-insecure-#k2&@x@vrx@qa2ztqvtl*&qgna&7bi(o#ir))i0jt0$ut#%3zw
 DEBUG = False
 
 ALLOWED_HOSTS = [
-    "https://zone-db-server.onrender.com",
+    "zone-db-server.onrender.com",
     "localhost",  
+    "127.0.0.1"
 ]
 
 
@@ -62,9 +63,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-CORS_ALLOW_ALL_ORIGINS = [
-    "http://localhost:5173",
-]
+CORS_ALLOW_ALL_ORIGINS = True
 
 ROOT_URLCONF = 'zone.urls'
 
